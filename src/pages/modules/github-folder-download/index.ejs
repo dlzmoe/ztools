@@ -5,7 +5,7 @@
   <p>将你想下载的 GitHub 仓库文件夹 url 复制到下面输入框即可。</p>
   <section class="m-p-input-container">
     <input type="text" v-model="url" :disabled="downloading" :readonly="downloading" placeholder="请输入 GitHub 当前页面链接">
-    <el-button type="primary" v-if="!downloading" @click="getFileList" :class="{'disable':downloading}">解析下载</el-button>
+    <button v-if="!downloading" @click="getFileList" :class="{'disable':downloading}">解析下载</button>
   </section>
 
   <template v-if="fileInfoList.length > 0">

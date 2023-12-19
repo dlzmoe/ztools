@@ -55,23 +55,39 @@ p {
 
 input[type="text"],
 textarea {
-  outline: none;
-  border: none;
-  border: 1px solid #b8b8b8;
+  box-sizing: border-box;
+  margin: 0;
+  font-variant: tabular-nums;
+  list-style: none;
+  font-feature-settings: "tnum";
+  position: relative;
+  display: inline-block;
+  height: 32px;
+  padding: 4px 11px;
+  color: rgba(0, 0, 0, .65);
+  font-size: 14px;
+  line-height: 1.5;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #d9d9d9;
   border-radius: 4px;
-  padding: 10px 10px;
-  width: 600px;
-  max-width: 100%;
-  transition: all 0.1s linear;
+  transition: all .3s;
+  outline: none;
+  width: 100%;
+  max-width: 600px;
 
   &:focus {
-    border-color: #333;
+    box-shadow: 0 0 0 2px rgba(24, 144, 255, .2);
+    border-color: #40a9ff;
   }
 }
 
 textarea {
+  font-family: inherit;
   resize: none;
   overflow: auto;
+  max-width: 1000px;
+  height: 200px;
 }
 
 .clearfix {
@@ -148,12 +164,16 @@ body {
     li {
 
       a {
-        padding: 4px 0;
+        padding: 6px 4px;
         display: block;
         transition: all 0.1s linear;
 
-        &.active,
         &:hover {
+          color: #fff;
+          text-decoration: none;
+        }
+
+        &.active {
           color: #fff;
           text-decoration: underline;
         }
@@ -184,4 +204,39 @@ main {
   bottom: 20px;
   width: 300px;
   padding: 0 20px;
+}
+
+button {
+  line-height: 1.499;
+  position: relative;
+  display: inline-block;
+  font-weight: 400;
+  white-space: nowrap;
+  text-align: center;
+  background-image: none;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, .015);
+  cursor: pointer;
+  transition: all .3s cubic-bezier(.645, .045, .355, 1);
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  touch-action: manipulation;
+  height: 32px;
+  padding: 0 15px;
+  font-size: 14px;
+  border-radius: 4px;
+  color: rgba(0, 0, 0, .65);
+  background-color: #fff;
+  border: 1px solid #d9d9d9;
+  color: #fff;
+  background-color: #1890ff;
+  border-color: #1890ff;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, .12);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, .045);
+
+  &:hover {
+    color: #fff;
+    background-color: #40a9ff;
+    border-color: #40a9ff;
+  }
 }
