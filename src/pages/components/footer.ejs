@@ -4,9 +4,10 @@
 
 <script>
   $(function () {
-    var pathname = window.location.pathname
+    var pathname = window.location.pathname;
     $('.aside ul a').each(function () {
-      if ($(this).attr('href') == pathname) {
+      if ($(this).attr('href') == '.' + pathname) {
+        $('.aside ul a').removeClass('active');
         $(this).addClass('active');
       }
     })

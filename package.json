@@ -1,14 +1,12 @@
 {
-  "name": "ejs-template",
-  "author": "zishume",
+  "name": "ztools",
+  "author": "98zi",
   "version": "1.0.0",
   "description": "gulp template for dev",
   "main": "index.js",
-  "license":"ISC",
   "scripts": {
     "dev": "rimraf dist && gulp dev",
     "build": "gulp build",
-    "build1": "gulp build && node scripts/upload.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [

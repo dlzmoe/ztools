@@ -1,0 +1,30 @@
+<div id="iconfont">
+  <div class="flex">
+    <el-button type="primary" v-if="iconList.length > 0" @click="copyType = copyType === 'value' ? 'name' : 'value'">复制
+      {{ copyType }}</el-button>
+    <el-button type="primary" v-if="iconList.length > 0" @click="reload">重新解析</el-button>
+  </div>
+
+  <section class="p-input-container" v-if="iconList.length === 0">
+    <div class="line"></div>
+    <div class="file-box">
+      <div class="input-box" v-if="iconList.length === 0">
+        <label>解析本地 ttf、woff、otf 文件</label>
+        <input type="file" @change="getLocalTTF" accept=".ttf,.woff,.otf">
+      </div>
+    </div>
+  </section>
+
+  <section v-else>
+    <p>点击模块即可复制对应数据。</p>
+    <div class="list">
+      <div class="item" v-for="item in iconList" @click="copyToClipboard(item[copyType])">
+        <svg v-if="isSymbol" class="icon" aria-hidden="true" v-html="`<use xlink:href='${item.value}'></use>`"></svg>
+        <div v-else class="iconfont" v-html="isCSS ? '' : item.show" :class="isCSS ? item.show : '' "></div>
+        <div>{{item.name}}</div>
+        <div>{{item.value}}</div>
+      </div>
+    </div>
+  </section>
+
+</div>

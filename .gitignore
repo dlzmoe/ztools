@@ -81,7 +81,3 @@ typings/
 
 # webpack build output
 build
-
-dist
-
-backup

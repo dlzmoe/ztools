@@ -3,3 +3,10 @@
 https://github.com/98zi/ztools/
 
 一个简单的工具库。
+
+## install
+
+```shell
+yarn
+yarn dev
+```

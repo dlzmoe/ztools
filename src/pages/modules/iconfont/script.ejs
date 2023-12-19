@@ -1,0 +1,236 @@
+<script>
+  new Vue({
+    el: '#iconfont',
+
+    data() {
+      return {
+        timeouter: 0, // 操作提示计时器
+        copyType: 'value', // icon 复制类型
+        bufferStr: null, // 字体编码内容
+        isSymbol: false, // 是否 symbol 模式
+        isCSS: false, // 是否 css 文件链接
+        iconList: [], // icon 列表
+      }
+    },
+
+    // 获取链接中携带的资源链接
+    created() {
+      const urlObj = new URL(location.href)
+      const url = urlObj.searchParams.get('source')
+      if (url) {
+        this.url = decodeURIComponent(url)
+        this.getURLFile()
+      }
+    },
+
+    methods: {
+
+      // ajax 请求
+      ajax(options) {
+        options = options || {};
+        let xhr = new XMLHttpRequest();
+        if (options.type === 'buffer') {
+          xhr.responseType = 'arraybuffer';
+        }
+
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            let status = xhr.status;
+            if (status >= 200 && status < 300) {
+              console.log(xhr)
+              options.success && options.success(xhr.response);
+            } else {
+              options.fail && options.fail(status);
+            }
+          }
+        };
+
+        xhr.open("GET", options.url, true);
+        xhr.send(null);
+      },
+
+      // 获取在线文件
+      getURLFile() {
+        if (!this.url) {
+          alert('请输入链接')
+          return
+        }
+
+        const urlObj = new URL(location.href)
+        urlObj.searchParams.set('source', encodeURIComponent(this.url))
+        window.history.replaceState(null, '', urlObj.href)
+
+        if (this.url.toLowerCase().indexOf('.ttf') !== -1) {
+          this.getOnlineTTF()
+        } else if (this.url.toLowerCase().indexOf('.css') !== -1) {
+          this.getOnlineCSS()
+        } else if (this.url.toLowerCase().indexOf('.js') !== -1) {
+          this.getOnlineJS()
+        }
+
+      },
+
+      // 解析本地 ttf 文件
+      getLocalTTF(event) {
+        // 解析文件内容
+        let file = event.target.files[0]
+        let reader = new FileReader();
+        reader.readAsArrayBuffer(file);
+        reader.onload = (evt) => { this.parseIcon(evt.target.result); }
+
+        // base64 编码，动态加入 @font-face
+        let readerBase64 = new FileReader();
+        readerBase64.readAsDataURL(file)
+        readerBase64.onload = (evt) => { this.setStyle(evt.target.result) }
+
+      },
+
+      // 解析在线 ttf 文件
+      getOnlineTTF() {
+        // 远程获取文件
+        this.ajax({
+          url: this.url,
+          type: 'buffer',
+          success: (params) => { this.parseIcon(params) }
+        })
+
+        this.setStyle(this.url)
+      },
+
+      // 解析 CSS 文件
+      getOnlineCSS() {
+        // 远程获取文件
+        this.isCSS = true;
+        this.ajax({
+          url: this.url,
+          success: (params) => {
+            this.setStyle('', params)
+            params.replace(/\.([^:^ ]+):[\s\S]+?content: "\\([^"]+)";/gi, (...item) => {
+              this.iconList.push({
+                show: item[1],
+                name: item[1],
+                value: `&#${item[2]};`,
+              })
+            })
+          }
+        })
+      },
+
+      // 解析 JS 文件
+      getOnlineJS() {
+        // 远程获取文件
+        this.isSymbol = true;
+        this.ajax({
+          url: this.url,
+          success: (params) => {
+            let $script = document.createElement('script')
+            $script.src = this.url
+            document.body.append($script);
+            // console.log(params)
+
+            //id="iconexchange"
+            params.replace(/id="([^"]+)"/gi, (...item) => {
+              this.iconList.push({
+                show: item[1].replace(/icon/, ''),
+                name: item[1].replace(/icon/, ''),
+                value: `#${item[1]}`,
+              })
+            })
+          }
+        })
+      },
+
+      // 打开所有副本
+      showAll() {
+        this.parseIcon(this.bufferStr, true)
+      },
+
+      // 解析 icon
+      parseIcon(bufferStr, showAll) {
+        this.bufferStr = bufferStr
+        this.iconList = []
+        let result = window.opentype.parse(this.bufferStr);
+        for (let key in result.glyphs.glyphs) {
+          let item = result.glyphs.glyphs[key]
+          if (!item.unicode) {
+          } else if (showAll) { // 是否显示所有 unicodes
+            let valueStr = ''
+            item.unicodes.forEach(unicode => valueStr += `${unicode};\n`)
+            this.iconList.push({
+              name: item.name,
+              value: valueStr,
+              show: `&#${item.unicode};`
+            })
+          } else {
+            this.iconList.push({
+              name: item.name,
+              show: `&#${item.unicode};`,
+              value: `&#${item.unicode};`
+            })
+          }
+        }
+        this.iconList.forEach(item => {
+          item.value = item.value.replace(/&#([^;]+);/ig, (target, value) => {
+            return `&#x${parseInt(value).toString(16)};`
+          })
+        })
+      },
+
+      // 添加 style
+      setStyle(url, cssFile) {
+        let $style = document.createElement('style')
+        if (cssFile) {
+          $style.innerHTML = cssFile
+        } else {
+          $style.innerHTML = `
+          @font-face {
+    font-family: 'iconfont';
+    src: url('${url}') format('truetype');
+  }
+  .iconfont {
+    font-family: "iconfont" !important;
+    font-size: 24px;font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+  }`;
+        }
+
+        document.body.append($style);
+      },
+
+      // 拷贝剪切板
+      copyToClipboard(content) {
+        clearTimeout(this.timeouter)
+        this.$message({
+          message: `复制成功：${content}`,
+          type: 'success'
+        });
+        
+
+        if (!document.queryCommandSupported('copy')) {
+          return false
+        }
+
+        let $input = document.createElement('input')
+        $input.style.opacity = '0'
+        $input.value = content
+        document.body.appendChild($input)
+        $input.select()
+
+        const result = document.execCommand('copy')
+        document.body.removeChild($input)
+        $input = null
+
+        return result
+      },
+
+      // 页面重新加载
+      reload() {
+        const urlObj = new URL(location.href)
+        urlObj.searchParams.delete('source')
+        location.href = urlObj.href
+      }
+    }
+  })
+</script>

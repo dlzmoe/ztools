@@ -1,4 +1,23 @@
 <div id="github-folder-download">
-  <iframe src="https://minhaskamal.github.io/DownGit/#/home" width="100%" height="600px" frameborder="0"></iframe>
-</div>
+  <!-- <iframe src="https://minhaskamal.github.io/DownGit/#/home" width="100%" height="600px" frameborder="0"></iframe> -->
 
+  <!--文件载入-->
+  <p>将你想下载的 GitHub 仓库文件夹 url 复制到下面输入框即可。</p>
+  <section class="m-p-input-container">
+    <input type="text" v-model="url" :disabled="downloading" :readonly="downloading" placeholder="请输入 GitHub 当前页面链接">
+    <el-button type="primary" v-if="!downloading" @click="getFileList" :class="{'disable':downloading}">解析下载</el-button>
+  </section>
+
+  <template v-if="fileInfoList.length > 0">
+    <div v-if="errorNum && downloadIndex >= fileInfoList.length" @click="retryAll">重新下载错误文件</div>
+    <div v-if="finishNum" @click="forceDownload">强制下载现有文件</div>
+    <div>碎片总量：{{ fileInfoList.length }}，已下载：{{ finishNum }}，错误：{{ errorNum }}，进度：{{ (finishNum /
+      fileInfoList.length * 100).toFixed(2) }}%</div>
+    <section>
+      <div v-for="(item, index) in fileInfoList" :class="[item.status]" @click="retry(index)" :title="item.path">
+        <div></div>
+        <div><span>{{ index + 1 }}</span> {{ item.absoluteUrl }}</div>
+      </div>
+    </section>
+  </template>
+</div>

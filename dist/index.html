@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>首页</title>
+  <link rel="stylesheet" href="./element/index.css" />
+  <link rel="stylesheet" href="./css/index.css" />
+</head>
+
+<body>
+  <div class="aside">
+  <h1><a href="/">ztools</a></h1>
+  <ul>
+    <li><a href="./github-folder-download.html">GitHub「特定」文件夹或文件下载工具</a></li>
+    <li><a href="./iconfont.html">解析 iconfont 字体文件</a></li>
+  </ul>
+</div> <!-- 侧边 -->
+
+    <main>
+      <p>这是一个简单的工具库。</p>
+      <p><a href="https://github.com/98zi/ztools">https://github.com/98zi/ztools</a></p>
+    </main>
+
+    <script src="./js/vue.js"></script>
+<script src="./js/jquery3.6.1.js"></script>
+<script src="./element/index.js"></script>
+
+<script>
+  $(function () {
+    var pathname = window.location.pathname;
+    $('.aside ul a').each(function () {
+      if ($(this).attr('href') == '.' + pathname) {
+        $('.aside ul a').removeClass('active');
+        $(this).addClass('active');
+      }
+    })
+  })
+</script> <!-- 公共 -->
+
+</body>
+
+</html>

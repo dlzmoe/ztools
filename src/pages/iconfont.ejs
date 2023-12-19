@@ -5,23 +5,24 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GitHub 下载指定文件夹</title>
+  <title>解析 iconfont 字体文件</title>
   <link rel="stylesheet" href="./element/index.css" />
   <link rel="stylesheet" href="./css/index.css" />
+  <%- include('modules/iconfont/style'); %>
 </head>
 
 <body>
   <%- include('components/aside'); %> <!-- 侧边 -->
 
     <main>
-      <h2>GitHub 下载指定文件夹</h2>
-      <%- include('modules/github-folder-download/index'); %>
+      <h2>解析 iconfont 字体文件</h2>
+      <%- include('modules/iconfont/index'); %>
     </main>
 
     <%- include('components/footer'); %> <!-- 公共 -->
 
-      <script src="./js/jszip.js"></script>
-      <%- include('modules/github-folder-download/script'); %>
+      <script src="./js/opentype.min.js"></script>
+      <%- include('modules/iconfont/script'); %>
 </body>
 
 </html>

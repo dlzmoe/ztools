@@ -1,4 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub 下载指定文件夹</title>
+  <link rel="stylesheet" href="./element/index.css" />
+  <link rel="stylesheet" href="./css/index.css" />
+</head>
+
+<body>
+  <div class="aside">
+  <h1><a href="/">ztools</a></h1>
+  <ul>
+    <li><a href="./github-folder-download.html">GitHub「特定」文件夹或文件下载工具</a></li>
+    <li><a href="./iconfont.html">解析 iconfont 字体文件</a></li>
+  </ul>
+</div> <!-- 侧边 -->
+
+    <main>
+      <h2>GitHub 下载指定文件夹</h2>
+      <div id="github-folder-download">
+  <!-- <iframe src="https://minhaskamal.github.io/DownGit/#/home" width="100%" height="600px" frameborder="0"></iframe> -->
+
+  <!--文件载入-->
+  <p>将你想下载的 GitHub 仓库文件夹 url 复制到下面输入框即可。</p>
+  <section class="m-p-input-container">
+    <input type="text" v-model="url" :disabled="downloading" :readonly="downloading" placeholder="请输入 GitHub 当前页面链接">
+    <el-button type="primary" v-if="!downloading" @click="getFileList" :class="{'disable':downloading}">解析下载</el-button>
+  </section>
+
+  <template v-if="fileInfoList.length > 0">
+    <div v-if="errorNum && downloadIndex >= fileInfoList.length" @click="retryAll">重新下载错误文件</div>
+    <div v-if="finishNum" @click="forceDownload">强制下载现有文件</div>
+    <div>碎片总量：{{ fileInfoList.length }}，已下载：{{ finishNum }}，错误：{{ errorNum }}，进度：{{ (finishNum /
+      fileInfoList.length * 100).toFixed(2) }}%</div>
+    <section>
+      <div v-for="(item, index) in fileInfoList" :class="[item.status]" @click="retry(index)" :title="item.path">
+        <div></div>
+        <div><span>{{ index + 1 }}</span> {{ item.absoluteUrl }}</div>
+      </div>
+    </section>
+  </template>
+</div>
+    </main>
+
+    <script src="./js/vue.js"></script>
+<script src="./js/jquery3.6.1.js"></script>
+<script src="./element/index.js"></script>
+
 <script>
+  $(function () {
+    var pathname = window.location.pathname;
+    $('.aside ul a').each(function () {
+      if ($(this).attr('href') == '.' + pathname) {
+        $('.aside ul a').removeClass('active');
+        $(this).addClass('active');
+      }
+    })
+  })
+</script> <!-- 公共 -->
+
+      <script src="./js/jszip.js"></script>
+      <script>
   // script 注入
   new Vue({
     el: '#github-folder-download',
@@ -292,3 +357,6 @@
   })
   // script 注入
 </script>
+</body>
+
+</html>
