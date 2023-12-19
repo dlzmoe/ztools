@@ -27,6 +27,10 @@ li {
 a {
   text-decoration: none;
   color: #518ecf;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 body {
@@ -130,7 +134,7 @@ body {
   height: 100vh;
   overflow-y: auto;
   color: #d2d2d2;
-  padding: 10px;
+  padding: 20px 10px 10px 10px;
 
   a {
     color: inherit;
@@ -164,11 +168,20 @@ body {
 
 // main
 main {
-  padding: 10px 20px;
+  padding: 30px 20px;
 
   h2 {
     margin-bottom: 20px;
     border-bottom: 1px solid #d6d6d6;
     padding-bottom: 10px;
   }
+}
+
+// foot
+.foot {
+  position: fixed;
+  left: 0;
+  bottom: 20px;
+  width: 300px;
+  padding: 0 20px;
 }

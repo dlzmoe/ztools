@@ -2,11 +2,11 @@
   "name": "ztools",
   "author": "98zi",
   "version": "1.0.0",
-  "description": "gulp template for dev",
+  "description": "a tools site.",
   "main": "index.js",
   "scripts": {
     "dev": "rimraf dist && gulp dev",
-    "build": "gulp build",
+    "build": "rimraf dist && gulp build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
