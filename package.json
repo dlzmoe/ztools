@@ -1,0 +1,43 @@
+{
+  "name": "ejs-template",
+  "author": "zishume",
+  "version": "1.0.0",
+  "description": "gulp template for dev",
+  "main": "index.js",
+  "license":"ISC",
+  "scripts": {
+    "dev": "rimraf dist && gulp dev",
+    "build": "gulp build",
+    "build1": "gulp build && node scripts/upload.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "gulp",
+    "html"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.16.10",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-node-resolve": "^13.1.3",
+    "basic-ftp": "^4.6.6",
+    "cli-progress": "^3.10.0",
+    "core-js": "^3.20.3",
+    "gulp": "^4.0.2",
+    "gulp-autoprefixer": "^8.0.0",
+    "gulp-clean": "^0.4.0",
+    "gulp-clean-css": "^4.3.0",
+    "gulp-connect": "^5.7.0",
+    "gulp-ejs": "^5.1.0",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^5.1.0",
+    "rollup": "^2.64.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "sass": "^1.49.0"
+  },
+  "dependencies": {
+    "@babel/preset-env": "^7.16.8",
+    "canvas-txt": "^3.0.0",
+    "jquery": "^3.6.0"
+  }
+}
