@@ -1,0 +1,286 @@
+<script>
+  // script注入
+  new Vue({
+    el: '#github-folder-download',
+
+    data() {
+      return {
+        url: '', // 在线链接
+        // url: 'https://github.com/SetoSkins/Old_SetoThermal/blob/main/install.sh', // 文件在线链接
+        // url: 'https://github.com/SetoSkins/Old_SetoThermal/blob/main/mods/01_8100/files/service.sh', // 文件在线链接
+        // url: 'https://github.com/Momo707577045/m3u8-downloader/tree/master/imgs', // 文件夹在线链接
+        tips: 'GitHub 「特定」文件夹或文件下载工具', // 顶部提示
+        downloading: false, // 是否下载中
+        isBlob: false, // 输入的链接是否是具体文件，而不是文件夹
+        errorNum: 0, // 错误数
+        finishNum: 0, // 已下载数
+        downloadIndex: 0, // 当前下载文件
+        fileInfoList: [], // 文件信息数组
+        projectInfo: { // 项目信息
+          ownerName: '',
+          projectName: '',
+          branchName: '',
+          dirPath: '',
+        }
+      }
+    },
+
+    created() {
+      this.getSource();
+      window.addEventListener('keyup', this.onKeyup)
+    },
+
+    beforeDestroy() {
+      window.removeEventListener('keyup', this.onKeyup)
+    },
+
+    methods: {
+      // 获取链接中携带的资源链接
+      getSource() {
+        let { href } = location
+        if (href.indexOf('?source=') > -1) {
+          this.url = href.split('?source=')[1]
+        }
+      },
+
+      // 退出弹窗
+      onKeyup(event) {
+        if (event.keyCode === 13) { // 键入ESC
+          this.getFileList()
+        }
+      },
+
+      // ajax 请求
+      ajax(options) {
+        options = options || {};
+        let xhr = new XMLHttpRequest();
+        if (options.type === 'file') {
+          xhr.responseType = 'arraybuffer';
+        }
+
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            let status = xhr.status;
+            if (status >= 200 && status < 300) {
+              options.success && options.success(xhr.response);
+            } else {
+              options.fail && options.fail(status);
+            }
+          }
+        };
+
+        xhr.open("GET", options.url, true);
+        xhr.send(null);
+      },
+
+      // 获取分支及标签
+      checkBranchAndTags(branchAndPath, callback) {
+        if (!branchAndPath) {
+          callback()
+          return
+        }
+        if (branchAndPath.indexOf('blob/') === 0) {
+          this.isBlob = true
+          branchAndPath = branchAndPath.replace('blob/', '') // 去除无用参数
+        } else {
+          branchAndPath = branchAndPath.replace('tree/', '') // 去除无用参数
+        }
+        let branchList = []
+        this.ajax({
+          url: `https://api.github.com/repos/${this.projectInfo.ownerName}/${this.projectInfo.projectName}/branches`,
+          success: (treeStr) => {
+            branchList = [...branchList, ...JSON.parse(treeStr)]
+            this.ajax({
+              url: `https://api.github.com/repos/${this.projectInfo.ownerName}/${this.projectInfo.projectName}/tags`,
+              success: (treeStr) => {
+                [...branchList, ...JSON.parse(treeStr), { name: 'master' }].map(item => item.name).some(branch => {
+                  if (branchAndPath.indexOf(branch) === 0) { // 寻找匹配的分支与 tag
+                    this.projectInfo.branchName = branch
+                    this.projectInfo.dirPath = branchAndPath.replace(branch, '').replace('/', '') + (this.isBlob ? '' : '/') // 去除首个 '/'
+                    return true
+                  }
+                })
+                console.log(this.projectInfo)
+                callback && callback(branchList)
+              },
+              fail: _ => this.alertError('链接不正确，请查看链接是否有效')
+            })
+          },
+          fail: _ => this.alertError('链接不正确，请查看链接是否有效')
+        })
+      },
+
+      // 获取 git tree
+      getFileList() {
+        if (!this.url) {
+          alert('请输入链接')
+          return
+        } else if (this.downloading) {
+          alert('资源下载中，请稍后')
+          return
+        }
+
+        this.downloading = true
+        this.tips = 'git tree 文件下载中，请稍后'
+        this.url = decodeURIComponent(this.url)
+        const pathParams = this.url.replace('https://github.com/', '').trim().split('/')
+        this.projectInfo.ownerName = pathParams[0]
+        this.projectInfo.projectName = pathParams[1]
+        this.projectInfo.branchName = pathParams[3]
+        this.checkBranchAndTags(pathParams.slice(2).join('/'), () => {
+          if (this.isBlob) { // 下载特定文件
+            this.fileInfoList = [{
+              status: '', // 待下载状态
+              path: this.projectInfo.dirPath,
+              absoluteUrl: `https://raw.githubusercontent.com/${this.projectInfo.ownerName}/${this.projectInfo.projectName}/${this.projectInfo.branchName}/${this.projectInfo.dirPath}`,
+            }]
+            this.downloadFile()
+          } else { // 下载特定文件夹
+            this.ajax({
+              url: `https://api.github.com/repos/${this.projectInfo.ownerName}/${this.projectInfo.projectName}/git/trees/${this.projectInfo.branchName}?recursive=1`,
+              success: (treeStr) => {
+                JSON.parse(treeStr).tree.forEach(item => {
+                  if (item.path.indexOf(this.projectInfo.dirPath) === 0 && item.type !== 'tree') { //  // 过滤特定数组 不是树节点，只收集文件
+                    item.absoluteUrl = `https://raw.githubusercontent.com/${this.projectInfo.ownerName}/${this.projectInfo.projectName}/${this.projectInfo.branchName}/${item.path}`
+                    item.status = '' // 待下载状态
+                    this.fileInfoList.push(item) // 收集
+                  }
+                })
+                this.downloadFile()
+              },
+              fail: () => {
+                this.alertError('链接不正确，请查看链接是否有效')
+              }
+            })
+          }
+        })
+      },
+
+      // 下载分片
+      downloadFile() {
+        this.tips = 'git 项目文件下载中，请稍后'
+        let download = () => {
+          let index = this.downloadIndex
+          this.downloadIndex++
+          if (this.fileInfoList[index] && !this.fileInfoList[index].status) {
+            this.ajax({
+              url: this.fileInfoList[index].absoluteUrl,
+              type: 'file',
+              success: (file) => {
+                this.dealFile(file, index, () => {
+                  this.downloadIndex < this.fileInfoList.length && download()
+                })
+              },
+              fail: () => {
+                this.errorNum++
+                this.fileInfoList[index].status = 'error'
+                if (this.downloadIndex < this.fileInfoList.length) {
+                  download()
+                }
+              }
+            })
+          } else if (this.downloadIndex < this.fileInfoList.length) { // 跳过已经成功的文件
+            download()
+          }
+        }
+
+        // 建立多少个 ajax 线程
+        for (let i = 0; i < 10; i++) {
+          download(i)
+        }
+      },
+
+      // 重新下载某个文件
+      retry(index) {
+        if (this.fileInfoList[index].status === 'error') {
+          this.fileInfoList[index].status = ''
+          this.ajax({
+            url: this.fileInfoList[index].absoluteUrl,
+            type: 'file',
+            success: (file) => {
+              this.errorNum--
+              this.dealFile(file, index)
+            },
+            fail: () => {
+              this.fileInfoList[index].status = 'error'
+            }
+          })
+        }
+      },
+
+      // 处理文件
+      dealFile(file, index, callback) {
+        this.fileInfoList[index].fileData = file
+        this.fileInfoList[index].status = 'finish'
+        this.finishNum++
+        this.finishNum === this.fileInfoList.length && this.downloadZip()
+        callback && callback()
+      },
+
+      // 重新下载所有错误文件
+      retryAll() {
+        this.errorNum = 0
+        this.downloadIndex = 0
+        this.fileInfoList.forEach((item) => { // 重置所有文件状态
+          if (item.status === 'error') {
+            item.status = ''
+          }
+        })
+        this.downloadFile()
+      },
+
+      // 强制下载现有文件
+      forceDownload() {
+        if (this.fileInfoList.length) {
+          this.downloadZip()
+        } else {
+          alert('当前无已下载文件')
+        }
+      },
+
+      // 下载整合后的 git 文件
+      downloadZip() {
+        this.tips = 'git 文件整合中，请留意浏览器下载'
+        const zip = new JSZip()
+        this.fileInfoList.forEach(item => item.status === 'finish' && zip.file(item.path, item.fileData))
+        zip.generateAsync({ type: 'blob' }).then((content) => {
+          let a = document.createElement('a')
+          a.download = `${[this.projectInfo.projectName, this.projectInfo.branchName, this.projectInfo.dirPath].join('/').replace(/\//g, '_')}.zip`
+          a.href = URL.createObjectURL(content)
+          a.style.display = 'none'
+          document.body.appendChild(a)
+          a.click()
+          a.remove()
+        })
+      },
+
+      // 发生错误，进行提示
+      alertError(tips) {
+        alert(tips)
+        this.downloading = false
+        this.tips = 'GitHub 特定文件夹或文件下载工具';
+      },
+
+      // 拷贝剪切板
+      copyToClipboard(content) {
+        if (!document.queryCommandSupported('copy')) {
+          return false
+        }
+
+        let $input = document.createElement('textarea')
+        $input.style.opacity = '0'
+        $input.value = content
+        document.body.appendChild($input)
+        $input.select()
+
+        const result = document.execCommand('copy')
+        document.body.removeChild($input)
+        $input = null
+
+        return result
+      },
+
+    }
+  })
+  // script注入
+</script>

@@ -55,7 +55,7 @@ function publicFile() {
 
 // 编译scss文件
 function compileSass() {
-  return src('src/style/style.scss')
+  return src('src/style/index.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(autoprefixer())
     .pipe(minify({

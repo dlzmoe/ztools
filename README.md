@@ -1,3 +1,5 @@
-## ejs-template
+## ztools
 
-一个基于 ejs 库的开发模板，引入element-ui。
+https://github.com/98zi/ztools/
+
+一个简单的工具库。

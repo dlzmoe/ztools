@@ -1,0 +1,158 @@
+/*公共样式--开始*/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: normal;
+}
+
+ul,
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: #518ecf;
+}
+
+body {
+  font-family: "Microsoft YaHei";
+  font-size: 14px;
+  color: #333;
+}
+
+img {
+  border: none;
+  vertical-align: middle;
+}
+
+table {
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+p {
+  margin: 1em 0;
+}
+
+input,
+textarea {
+  outline: none;
+  border: none;
+}
+
+textarea {
+  resize: none;
+  overflow: auto;
+}
+
+.clearfix {
+  zoom: 1;
+}
+
+.clearfix:after {
+  content: ".";
+  width: 0;
+  height: 0;
+  visibility: hidden;
+  display: block;
+  clear: both;
+  overflow: hidden;
+}
+
+.fl {
+  float: left
+}
+
+.fr {
+  float: right
+}
+
+.tl {
+  text-align: left;
+}
+
+.tc {
+  text-align: center
+}
+
+.tr {
+  text-align: right;
+}
+
+.ellipse {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.inline {
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+}
+
+body {
+  color: #333;
+  padding-left: 300px;
+}
+
+.aside {
+  position: fixed;
+  left: 0;
+  top: 0;
+  background: #333;
+  width: 300px;
+  height: 100vh;
+  overflow-y: auto;
+  color: #d2d2d2;
+  padding: 10px;
+
+  a {
+    color: inherit;
+  }
+
+  ul {
+    margin-top: 10px;
+    border-bottom: 1px solid #777;
+    padding-bottom: 20px;
+
+    li {
+
+      a {
+        padding: 4px 0;
+        display: block;
+        transition: all 0.1s linear;
+
+        &.active,
+        &:hover {
+          color: #fff;
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .title {
+      font-size: 18px;
+    }
+  }
+}
+
+// main
+main {
+  padding: 10px 20px;
+}

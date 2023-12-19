@@ -5,21 +5,23 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>首页</title>
+  <title>GitHub 「特定」文件夹或文件下载工具</title>
   <link rel="stylesheet" href="./element/index.css" />
   <link rel="stylesheet" href="./css/index.css" />
+  <%- include('modules/github-folder-download/style'); %>
 </head>
 
 <body>
   <%- include('components/aside'); %> <!-- 侧边 -->
 
     <main>
-      <p>这是一个简单的工具库。</p>
-      <p><a href="https://github.com/98zi/ztools">https://github.com/98zi/ztools</a></p>
+      <%- include('modules/github-folder-download/index'); %>
     </main>
 
     <%- include('components/footer'); %> <!-- 公共 -->
 
+    <script src="https://upyun.luckly-mjw.cn/lib/jszip.js"></script>
+    <%- include('modules/github-folder-download/script'); %>
 </body>
 
 </html>

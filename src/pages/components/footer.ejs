@@ -1,3 +1,14 @@
-<footer>
+<script src="./js/vue.js"></script>
+<script src="./js/jquery3.6.1.js"></script>
+<script src="./element/index.js"></script>
 
-</footer>
+<script>
+  $(function () {
+    var pathname = window.location.pathname
+    $('.aside ul a').each(function () {
+      if ($(this).attr('href') == pathname) {
+        $(this).addClass('active');
+      }
+    })
+  })
+</script>
