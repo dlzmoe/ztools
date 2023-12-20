@@ -1,0 +1,33 @@
+<div id="github-star">
+  <input type="text" v-model="account" placeholder="请输入GitHub账户名称" style="width:300px;">
+  <button @click="getGitStatus" @touchstart="getGitStatus">统 计</button>
+  <button class="delete" @click="clearLocal">清理缓存</button>
+  <p></p>
+  <template>
+    <el-table :data="gitItemList" style="width: 100%">
+      <el-table-column label="项目名" width="400">
+        <template v-slot="scope">
+          <span :data-id="scope.row.id"> {{scope.row.full_name}}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="star" width="100">
+        <template v-slot="scope">
+          {{scope.row.stargazers_count}}
+        </template>
+      </el-table-column>
+
+      <el-table-column label="fork" width="100">
+        <template v-slot="scope">
+          {{scope.row.forks_count}}
+        </template>
+      </el-table-column>
+
+      <el-table-column label="操作">
+        <template v-slot="scope">
+          <a :href="'https://github.com/'+scope.row.full_name" target="_blank">前往 GitHub 仓库</a>
+        </template>
+      </el-table-column>
+    </el-table>
+  </template>
+</div>

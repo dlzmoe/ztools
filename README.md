@@ -21,6 +21,7 @@
 - [时间戳转换工具](https://ztools.zishu.me/timestamp/)
 - [获取 ip 地址](https://ztools.zishu.me/ip/)
 - [生成 GitHub 贡献图](https://ztools.zishu.me/generate-gitHub-contributions/)
+- [GitHub Star 统计](https://ztools.zishu.me/github-star/)
 
 ## install
 

@@ -1,0 +1,60 @@
+<script>
+  new Vue({
+    el: '#github-star',
+    data() {
+      return {
+        gitItemList: [],
+        account: '',
+      };
+    },
+    methods: {
+      getGitStatus() {
+        window.history.replaceState(null, '', `${location.href.split('?')[0]}?account=${this.account}`)
+        if (!this.account.trim()) {
+          this.$message({
+            message: '请输入统计账号',
+            type: 'error'
+          });
+          return
+        }
+        localStorage.setItem('account', this.account)
+        this.$message({
+          message: '数据统计中，请稍后！',
+          type: 'info'
+        });
+        fetch(`https://api.github.com/users/${this.account}/repos?page=1&per_page=100`, { method: 'GET' })
+          .then(res => {
+            if (res.status === 404) {
+              this.$message({
+                message: '账号不存在，请重新检查！',
+                type: 'error'
+              });
+
+            }
+            return res.json()
+          })
+          .then(data => {
+            this.$message({
+              message: '解析成功！',
+              type: 'success'
+            });
+            this.gitItemList = data;
+            this.gitItemList.sort(function (a, b) {
+              return b.stargazers_count - a.stargazers_count;
+            });
+            localStorage.setItem('gitItemList', JSON.stringify(this.gitItemList));
+          })
+      },
+      clearLocal() {
+        localStorage.removeItem('gitItemList');
+        location.reload();
+      }
+    },
+    mounted() {
+      const gitItemList = JSON.parse(localStorage.getItem("gitItemList"));
+      if (gitItemList) {
+        this.gitItemList = gitItemList;
+      }
+    },
+  })
+</script>

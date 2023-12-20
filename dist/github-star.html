@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="/images/logo.png" type="image/x-icon">
-    <title>生成 GitHub 贡献图</title>
+    <title>Github Star 统计</title>
     <link rel="stylesheet" href="/element/index.css" />
     <link rel="stylesheet" href="/css/index.css" />
 </head>
@@ -32,10 +32,39 @@
 </div> <!-- 侧边 -->
 
     <main>
-      <h2>生成 GitHub 贡献图</h2>
-      <div id="demo">
-  <el-tag>https://contrib.rocks/</el-tag>
-  <iframe src="https://contrib.rocks/preview?repo=vuejs%2Fcore" frameborder="0"></iframe>
+      <h2>Github Star 统计</h2>
+      <div id="github-star">
+  <input type="text" v-model="account" placeholder="请输入GitHub账户名称" style="width:300px;">
+  <button @click="getGitStatus" @touchstart="getGitStatus">统 计</button>
+  <button class="delete" @click="clearLocal">清理缓存</button>
+  <p></p>
+  <template>
+    <el-table :data="gitItemList" style="width: 100%">
+      <el-table-column label="项目名" width="400">
+        <template v-slot="scope">
+          <span :data-id="scope.row.id"> {{scope.row.full_name}}</span>
+        </template>
+      </el-table-column>
+
+      <el-table-column label="star" width="100">
+        <template v-slot="scope">
+          {{scope.row.stargazers_count}}
+        </template>
+      </el-table-column>
+
+      <el-table-column label="fork" width="100">
+        <template v-slot="scope">
+          {{scope.row.forks_count}}
+        </template>
+      </el-table-column>
+
+      <el-table-column label="操作">
+        <template v-slot="scope">
+          <a :href="'https://github.com/'+scope.row.full_name" target="_blank">前往 GitHub 仓库</a>
+        </template>
+      </el-table-column>
+    </el-table>
+  </template>
 </div>
     </main>
 
@@ -98,17 +127,61 @@
 
       <script>
   new Vue({
-    el: '#demo',
+    el: '#github-star',
     data() {
       return {
-
-      }
+        gitItemList: [],
+        account: '',
+      };
     },
     methods: {
-      
+      getGitStatus() {
+        window.history.replaceState(null, '', `${location.href.split('?')[0]}?account=${this.account}`)
+        if (!this.account.trim()) {
+          this.$message({
+            message: '请输入统计账号',
+            type: 'error'
+          });
+          return
+        }
+        localStorage.setItem('account', this.account)
+        this.$message({
+          message: '数据统计中，请稍后！',
+          type: 'info'
+        });
+        fetch(`https://api.github.com/users/${this.account}/repos?page=1&per_page=100`, { method: 'GET' })
+          .then(res => {
+            if (res.status === 404) {
+              this.$message({
+                message: '账号不存在，请重新检查！',
+                type: 'error'
+              });
+
+            }
+            return res.json()
+          })
+          .then(data => {
+            this.$message({
+              message: '解析成功！',
+              type: 'success'
+            });
+            this.gitItemList = data;
+            this.gitItemList.sort(function (a, b) {
+              return b.stargazers_count - a.stargazers_count;
+            });
+            localStorage.setItem('gitItemList', JSON.stringify(this.gitItemList));
+          })
+      },
+      clearLocal() {
+        localStorage.removeItem('gitItemList');
+        location.reload();
+      }
     },
     mounted() {
-      
+      const gitItemList = JSON.parse(localStorage.getItem("gitItemList"));
+      if (gitItemList) {
+        this.gitItemList = gitItemList;
+      }
     },
   })
 </script>

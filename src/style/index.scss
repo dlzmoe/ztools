@@ -250,4 +250,14 @@ button {
     background-color: #40a9ff;
     border-color: #40a9ff;
   }
+
+  &.delete {
+    background-color: #f56c6c;
+    border-color: #f56c6c;
+
+    &:hover {
+      background: #f78989;
+      border-color: #f78989;
+    }
+  }
 }
