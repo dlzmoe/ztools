@@ -1,12 +1,17 @@
 ## ztools
 
-<div style="text-align:center">
-<img src="https://imgurl.zishu.me/2023/1702999949390.webp" style="max-width:100px">
-</div>
+<p align="center">
+  <a href="https://github.com/98zi/ztools/">
+    <img src="https://imgurl.zishu.me/2023/1702999949390.webp" alt="Logo" width="200">
+  </a>
+  <p align="center">
+   这是一个简单的工具库，纯前端实现，无后台，代码已开源。
 
-在线展示：[https://ztools.zishu.me/](https://ztools.zishu.me/)
-
-这是一个简单的工具库，纯前端实现，无后台，代码已开源。
+  <a href="https://ztools.zishu.me">在线演示</a>
+  ·
+  <a href="https://github.com/98zi/ztools/issues">提出新特性</a>
+  </p>
+</p>
 
 ## install
 
