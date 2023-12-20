@@ -1,13 +1,15 @@
 <script>
   function convertTimestamp() {
     let input = document.getElementById('input').value;
-    let regex = /\b\d{13}\b/g; // 匹配13位数字的时间戳
+    let regex = /\b\d+\b/g; // 匹配任意数字长度的时间戳
     let matched = input.match(regex);
     let replaced = new Set();
     if (matched) {
       matched.forEach(timestamp => {
         if (!replaced.has(timestamp)) {
-          let date = new Date(parseInt(timestamp));
+          // 将10位时间戳转换为13位时间戳
+          let timestampInMilliseconds = parseInt(timestamp.length === 10 ? timestamp * 1000 : timestamp);
+          let date = new Date(timestampInMilliseconds);
           let year = date.getFullYear();
           let month = String(date.getMonth() + 1).padStart(2, '0');
           let day = String(date.getDate()).padStart(2, '0');
@@ -22,7 +24,7 @@
       });
       document.getElementById('output').value = input;
     } else {
-      document.getElementById('output').value = "解析失败，未找到有效的13位数字时间戳";
+      document.getElementById('output').value = "解析失败，未找到有效的数字时间戳";
     }
   }
 

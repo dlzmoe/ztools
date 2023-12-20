@@ -27,7 +27,7 @@
     <main>
       <h2>时间戳转换工具</h2>
       <div id="timestamp">
-  <textarea id="input" placeholder="输入时间戳">赋值包含时间戳的文本在这里，比如 1703045602576，就在自动在下面输出对应的时间，仅支持13位数字时间戳。</textarea>
+  <textarea id="input" placeholder="输入时间戳">比如 1703051862540 或者 1703052085</textarea>
   <p>自动转换 ==></p>
   <textarea id="output" readonly></textarea>
 </div>
@@ -53,13 +53,15 @@
       <script>
   function convertTimestamp() {
     let input = document.getElementById('input').value;
-    let regex = /\b\d{13}\b/g; // 匹配13位数字的时间戳
+    let regex = /\b\d+\b/g; // 匹配任意数字长度的时间戳
     let matched = input.match(regex);
     let replaced = new Set();
     if (matched) {
       matched.forEach(timestamp => {
         if (!replaced.has(timestamp)) {
-          let date = new Date(parseInt(timestamp));
+          // 将10位时间戳转换为13位时间戳
+          let timestampInMilliseconds = parseInt(timestamp.length === 10 ? timestamp * 1000 : timestamp);
+          let date = new Date(timestampInMilliseconds);
           let year = date.getFullYear();
           let month = String(date.getMonth() + 1).padStart(2, '0');
           let day = String(date.getDate()).padStart(2, '0');
@@ -74,7 +76,7 @@
       });
       document.getElementById('output').value = input;
     } else {
-      document.getElementById('output').value = "解析失败，未找到有效的13位数字时间戳";
+      document.getElementById('output').value = "解析失败，未找到有效的数字时间戳";
     }
   }
 
