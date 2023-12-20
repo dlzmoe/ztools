@@ -1,6 +1,6 @@
 ## ztools
 
-<p align="center">
+<div align="center">
   <a href="https://github.com/98zi/ztools/">
     <img src="https://imgurl.zishu.me/2023/1702999949390.webp" alt="Logo" width="200">
   </a>
@@ -11,7 +11,8 @@
   ·
   <a href="https://github.com/98zi/ztools/issues">提出新特性</a>
   </p>
-</p>
+
+</div>
 
 ## install
 
