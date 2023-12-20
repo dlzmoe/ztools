@@ -6,9 +6,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="./images/logo.png" type="image/x-icon">
-  <title>时间戳转换工具</title>
-  <link rel="stylesheet" href="./element/index.css" />
-  <link rel="stylesheet" href="./css/index.css" />
+    <title>获取 ip 地址</title>
+    <link rel="stylesheet" href="./element/index.css" />
+    <link rel="stylesheet" href="./css/index.css" />
 </head>
 
 <body>
@@ -26,11 +26,17 @@
 </div> <!-- 侧边 -->
 
     <main>
-      <h2>时间戳转换工具</h2>
-      <div id="timestamp">
-  <textarea id="input" placeholder="输入时间戳">比如 1703051862540 或者 1703052085</textarea>
-  <p>自动转换 ==></p>
-  <textarea id="output" readonly></textarea>
+      <h2>获取 ip 地址</h2>
+      <div id="ip">
+  <p>您的当前ip地址为：
+    <input type="text" v-model="ipouput" style="width:300px;margin-right:10px;">
+    <button @click="getIpOut">点击获取</button>
+  </p>
+  <p>
+    查询ip：<input type="text" v-model="searchip" style="width:300px;margin-right:10px;">
+    <button @click="getAdress">开始查询</button>
+  </p>
+  <p><span class="ouput"></span></p>
 </div>
     </main>
 
@@ -51,37 +57,68 @@
 </script> <!-- 公共 -->
 
       <script>
-  function convertTimestamp() {
-    let input = document.getElementById('input').value;
-    let regex = /\b\d+\b/g; // 匹配任意数字长度的时间戳
-    let matched = input.match(regex);
-    let replaced = new Set();
-    if (matched) {
-      matched.forEach(timestamp => {
-        if (!replaced.has(timestamp)) {
-          // 将10位时间戳转换为13位时间戳
-          let timestampInMilliseconds = parseInt(timestamp.length === 10 ? timestamp * 1000 : timestamp);
-          let date = new Date(timestampInMilliseconds);
-          let year = date.getFullYear();
-          let month = String(date.getMonth() + 1).padStart(2, '0');
-          let day = String(date.getDate()).padStart(2, '0');
-          let hours = String(date.getHours()).padStart(2, '0');
-          let minutes = String(date.getMinutes()).padStart(2, '0');
-          let seconds = String(date.getSeconds()).padStart(2, '0');
-          let formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-          let replacement = formattedDate;
-          input = input.replaceAll(timestamp, replacement);
-          replaced.add(timestamp);
+  new Vue({
+    el: '#ip',
+    data() {
+      return {
+        ipouput: 'loading...',
+        searchip: '',
+      }
+    },
+    methods: {
+      getIpOut() {
+        // 使用ipify的公共API获取IP地址信息
+        const apiUrl = 'https://api.ipify.org?format=json';
+        this.ipouput = 'loading...';
+        // 使用fetch函数发送GET请求
+        fetch(apiUrl)
+          .then(response => response.json())
+          .then(data => {
+            // 提取IP地址信息
+            this.ipouput = data.ip;
+            console.log('当前ip地址:', this.ipouput);
+          })
+          .catch(error => {
+            console.error('获取IP地址时出错:', error);
+            this.$message({
+              message: `接口错误，请切换代理！`,
+              type: 'error'
+            });
+          });
+      },
+      getAdress() {
+        if (this.searchip == '') {
+          this.$message({
+            message: `请输入正确 ip`,
+            type: 'info'
+          });
+          return false;
         }
-      });
-      document.getElementById('output').value = input;
-    } else {
-      document.getElementById('output').value = "解析失败，未找到有效的数字时间戳";
-    }
-  }
+        const apiKey = '1d4a4c3e124ed5a4fa8f184bff5c0bf7';  // 替换成你在 ipapi.com 注册获得的 API 密钥
+        const ipAddress = this.searchip;  // 替换成你要查询的IP地址
 
-  document.getElementById('input').addEventListener('input', convertTimestamp);
-  convertTimestamp();
+        const apiUrl = `http://api.ipapi.com/${ipAddress}?access_key=${apiKey}`;
+
+        // 使用fetch函数发送GET请求
+        fetch(apiUrl)
+          .then(response => response.json())
+          .then(data => {
+            // 提取地点信息
+            const location = `${data.city}, ${data.region_name}, ${data.country_name}`;
+            $('.ouput').html(`${data.city}, ${data.region_name}, ${data.country_name}`)
+            console.log('IP地址对应的地点:', location);
+          })
+          .catch(error => {
+            console.error('获取地点信息时出错:', error);
+            this.$message({
+              message: `请输入正确 ip`,
+              type: 'info'
+            });
+          });
+
+      }
+    },
+  })
 </script>
 </body>
 
