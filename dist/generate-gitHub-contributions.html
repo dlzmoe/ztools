@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="shortcut icon" href="/images/logo.png" type="image/x-icon">
-    <title>获取 ip 地址</title>
+    <title>生成 GitHub 贡献图</title>
     <link rel="stylesheet" href="/element/index.css" />
     <link rel="stylesheet" href="/css/index.css" />
 </head>
@@ -32,17 +32,10 @@
 </div> <!-- 侧边 -->
 
     <main>
-      <h2>获取 ip 地址</h2>
-      <div id="ip">
-  <p>您的当前ip地址为：
-    <input type="text" v-model="ipouput" style="width:300px;margin-right:10px;">
-    <button @click="getIpOut">点击获取</button>
-  </p>
-  <!-- <p>
-    查询ip：<input type="text" v-model="searchip" style="width:300px;margin-right:10px;">
-    <button @click="getAdress">开始查询</button>
-  </p>
-  <p><span class="ouput"></span></p> -->
+      <h2>生成 GitHub 贡献图</h2>
+      <div id="demo">
+  <el-tag>https://contrib.rocks/</el-tag>
+  <iframe src="https://contrib.rocks/preview?repo=vuejs%2Fcore" frameborder="0" style="width:100%;height:80vh;"></iframe>
 </div>
     </main>
 
@@ -101,65 +94,17 @@
 
       <script>
   new Vue({
-    el: '#ip',
+    el: '#demo',
     data() {
       return {
-        ipouput: 'loading...',
-        searchip: '',
+
       }
     },
     methods: {
-      getIpOut() {
-        // 使用ipify的公共API获取IP地址信息
-        const apiUrl = 'https://api.ipify.org?format=json';
-        this.ipouput = 'loading...';
-        // 使用fetch函数发送GET请求
-        fetch(apiUrl)
-          .then(response => response.json())
-          .then(data => {
-            // 提取IP地址信息
-            this.ipouput = data.ip;
-            console.log('当前ip地址:', this.ipouput);
-          })
-          .catch(error => {
-            console.error('获取IP地址时出错:', error);
-            this.$message({
-              message: `接口错误，请切换代理！`,
-              type: 'error'
-            });
-          });
-      },
-      getAdress() {
-        if (this.searchip == '') {
-          this.$message({
-            message: `请输入正确 ip`,
-            type: 'info'
-          });
-          return false;
-        }
-        const apiKey = '1d4a4c3e124ed5a4fa8f184bff5c0bf7';  // 替换成你在 ipapi.com 注册获得的 API 密钥
-        const ipAddress = this.searchip;  // 替换成你要查询的IP地址
-
-        const apiUrl = `http://api.ipapi.com/${ipAddress}?access_key=${apiKey}`;
-
-        // 使用fetch函数发送GET请求
-        fetch(apiUrl)
-          .then(response => response.json())
-          .then(data => {
-            // 提取地点信息
-            const location = `${data.city}, ${data.region_name}, ${data.country_name}`;
-            $('.ouput').html(`${data.city}, ${data.region_name}, ${data.country_name}`)
-            console.log('IP地址对应的地点:', location);
-          })
-          .catch(error => {
-            console.error('获取地点信息时出错:', error);
-            this.$message({
-              message: `请输入正确 ip`,
-              type: 'info'
-            });
-          });
-
-      }
+      
+    },
+    mounted() {
+      
     },
   })
 </script>

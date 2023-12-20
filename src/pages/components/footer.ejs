@@ -1,6 +1,6 @@
-<script src="./js/vue.js"></script>
-<script src="./js/jquery3.6.1.js"></script>
-<script src="./element/index.js"></script>
+<script src="/js/vue.js"></script>
+<script src="/js/jquery3.6.1.js"></script>
+<script src="/element/index.js"></script>
 
 <script>
   $(function () {
@@ -11,5 +11,42 @@
         $(this).addClass('active');
       }
     })
+  })
+</script>
+<script>
+  new Vue({
+    el: '#aside',
+    data() {
+      return {
+        list: [
+          {
+            name: 'GitHub 下载指定文件夹',
+            url: '/github-folder-download.html'
+          },
+          {
+            name: '解析 iconfont 字体文件',
+            url: '/iconfont.html'
+          },
+          {
+            name: '时间戳转换工具',
+            url: '/timestamp.html'
+          },
+          {
+            name: '获取 ip 地址',
+            url: '/ip.html'
+          },
+          {
+            name: '生成 GitHub 贡献图',
+            url: '/generate-gitHub-contributions.html'
+          },
+        ]
+      }
+    },
+    methods: {
+
+    },
+    mounted() {
+
+    },
   })
 </script>

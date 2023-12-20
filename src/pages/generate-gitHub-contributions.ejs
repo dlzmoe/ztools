@@ -3,7 +3,7 @@
 
 <head>
   <%- include('components/head'); %>
-    <title>获取 ip 地址</title>
+    <title>生成 GitHub 贡献图</title>
     <link rel="stylesheet" href="/element/index.css" />
     <link rel="stylesheet" href="/css/index.css" />
 </head>
@@ -12,13 +12,13 @@
   <%- include('components/aside'); %> <!-- 侧边 -->
 
     <main>
-      <h2>获取 ip 地址</h2>
-      <%- include('modules/ip/index'); %>
+      <h2>生成 GitHub 贡献图</h2>
+      <%- include('modules/generate-gitHub-contributions/index'); %>
     </main>
 
     <%- include('components/footer'); %> <!-- 公共 -->
 
-      <%- include('modules/ip/script'); %>
+      <%- include('modules/generate-gitHub-contributions/script'); %>
 </body>
 
 </html>

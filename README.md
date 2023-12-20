@@ -14,6 +14,14 @@
 
 </div>
 
+## 功能
+
+- [GitHub 下载指定文件夹](https://ztools.zishu.me/github-folder-download/)
+- [解析 iconfont 字体文件](https://ztools.zishu.me/iconfont/)
+- [时间戳转换工具](https://ztools.zishu.me/timestamp/)
+- [获取 ip 地址](https://ztools.zishu.me/ip/)
+- [生成 GitHub 贡献图](https://ztools.zishu.me/generate-gitHub-contributions/)
+
 ## install
 
 ```shell
