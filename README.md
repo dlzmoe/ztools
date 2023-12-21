@@ -34,7 +34,7 @@
 - [获取 ip 地址](https://ztools.zishu.me/ip/)
 - [推特视频下载器](https://ztools.zishu.me/twitter-video-download/)
 
-## install
+## 安装
 
 ```shell
 yarn
