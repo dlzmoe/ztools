@@ -25,8 +25,9 @@
 ## 功能
 
 - [GitHub Star 统计](https://ztools.zishu.me/github-star/)
-- [生成 GitHub 贡献图](https://ztools.zishu.me/generate-gitHub-contributions/)
+- [GitHub 生成仓库贡献人员图](https://ztools.zishu.me/generate-gitHub-contributions/)
 - [GitHub 下载指定文件夹](https://ztools.zishu.me/github-folder-download/)
+- [GitHub 历年 Commit 分布图](https://ztools.zishu.me/github-commit-year/)
 - [解析 iconfont 字体文件](https://ztools.zishu.me/iconfont/)
 - [时间戳转换工具](https://ztools.zishu.me/timestamp/)
 - [获取 ip 地址](https://ztools.zishu.me/ip/)

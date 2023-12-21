@@ -3,7 +3,7 @@
 
 <head>
   <%- include('components/head'); %>
-    <title>GitHub 生成仓库贡献人员图</title>
+    <title>GitHub 历年 Commit 分布图</title>
     <link rel="stylesheet" href="/element/index.css" />
     <link rel="stylesheet" href="/css/index.css" />
 </head>
@@ -12,13 +12,13 @@
   <%- include('components/aside'); %> <!-- 侧边 -->
 
     <main>
-      <h2> GitHub 生成仓库贡献人员图 <span class="h2tag">https://contrib.rocks/</span></h2>
-      <%- include('modules/generate-gitHub-contributions/index'); %>
+      <h2>GitHub 历年 Commit 分布图 <span class="h2tag">https://green-wall.leoku.dev/</span></h2>
+      <%- include('modules/github-commit-year/index'); %>
     </main>
 
     <%- include('components/footer'); %> <!-- 公共 -->
 
-      <%- include('modules/generate-gitHub-contributions/script'); %>
+      <%- include('modules/github-commit-year/script'); %>
 </body>
 
 </html>
