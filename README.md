@@ -6,7 +6,15 @@
   </a>
   <p align="center">
    这是一个简单的工具库，纯前端实现，无后台，代码已开源。
-
+    <p>
+        <img src="https://img.shields.io/github/license/98zi/ztools" alt="GitHub license">
+        <img src="https://img.shields.io/github/stars/98zi/ztools" alt="GitHub Repo stars">
+        <img src="https://img.shields.io/github/issues/98zi/ztools" alt="GitHub issues">
+        <img src="https://img.shields.io/github/forks/98zi/ztools" alt="GitHub forks">
+        <img src="https://img.shields.io/github/commit-activity/t/98zi/ztools" alt="GitHub commit">
+        <img src="https://img.shields.io/github/followers/98zi" alt="GitHub followers">
+        <img src="https://img.shields.io/discord/1126519222172925952" alt="Discord">
+      </p>
   <a href="https://ztools.zishu.me">在线演示</a>
   ·
   <a href="https://github.com/98zi/ztools/issues">提出新特性</a>
@@ -16,12 +24,12 @@
 
 ## 功能
 
+- [GitHub Star 统计](https://ztools.zishu.me/github-star/)
+- [生成 GitHub 贡献图](https://ztools.zishu.me/generate-gitHub-contributions/)
 - [GitHub 下载指定文件夹](https://ztools.zishu.me/github-folder-download/)
 - [解析 iconfont 字体文件](https://ztools.zishu.me/iconfont/)
 - [时间戳转换工具](https://ztools.zishu.me/timestamp/)
 - [获取 ip 地址](https://ztools.zishu.me/ip/)
-- [生成 GitHub 贡献图](https://ztools.zishu.me/generate-gitHub-contributions/)
-- [GitHub Star 统计](https://ztools.zishu.me/github-star/)
 - [推特视频下载器](https://ztools.zishu.me/twitter-video-download/)
 
 ## install

@@ -6,11 +6,11 @@
   $(function () {
     var pathname = window.location.pathname;
     $('.aside ul a').each(function () {
-      if ($(this).attr('href') == '.' + pathname) {
+      if ($(this).attr('href') == pathname) {
         $('.aside ul a').removeClass('active');
         $(this).addClass('active');
       }
-    })
+    });
   })
 </script>
 <script>
@@ -19,6 +19,14 @@
     data() {
       return {
         list: [
+          {
+            name: 'Github Star 统计',
+            url: '/github-star.html'
+          },
+          {
+            name: '生成 GitHub 贡献图',
+            url: '/generate-gitHub-contributions.html'
+          },
           {
             name: 'GitHub 下载指定文件夹',
             url: '/github-folder-download.html'
@@ -34,14 +42,6 @@
           {
             name: '获取 ip 地址',
             url: '/ip.html'
-          },
-          {
-            name: '生成 GitHub 贡献图',
-            url: '/generate-gitHub-contributions.html'
-          },
-          {
-            name: 'Github Star 统计',
-            url: '/github-star.html'
           },
           {
             name: '推特视频下载器',
