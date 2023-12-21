@@ -238,8 +238,11 @@ main {
   bottom: 20px;
   width: 300px;
   padding: 0 20px;
+  display: flex;
+  align-items: center;
 
   a {
+    margin-right: 10px;
     transition: all 0.1s linear;
   }
 
