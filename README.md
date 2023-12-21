@@ -29,7 +29,7 @@
 - [GitHub 下载指定文件夹](https://ztools.zishu.me/github-folder-download/)
 - [GitHub 历年 Commit 分布图](https://ztools.zishu.me/github-commit-year/)
 - [解析 iconfont 字体文件](https://ztools.zishu.me/iconfont/)
-- [iconfont 字体 ttf/woff 等合并](https://ztools.zishu.me/iconfont-merge/)
+- [合并 iconfont 字体 ttf/woff/woff2 等](https://ztools.zishu.me/iconfont-merge/)
 - [时间戳转换工具](https://ztools.zishu.me/timestamp/)
 - [获取 ip 地址](https://ztools.zishu.me/ip/)
 - [推特视频下载器](https://ztools.zishu.me/twitter-video-download/)
