@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include('components/head'); %>
+  <title>iconfont 字体 ttf/woff 等合并</title>
+  <link rel="stylesheet" href="/element/index.css" />
+  <link rel="stylesheet" href="/css/index.css" />
+</head>
+
+<body>
+  <%- include('components/aside'); %> <!-- 侧边 -->
+
+    <main>
+      <h2>iconfont 字体 ttf/woff 等合并 <span class="h2tag">https://css.bqrdh.com/font-merge</span></h2>
+      <%- include('modules/iconfont-merge/index'); %>
+    </main>
+
+    <%- include('components/footer'); %> <!-- 公共 -->
+
+      <script src="/js/opentype.min.js"></script>
+      <%- include('modules/iconfont-merge/script'); %>
+</body>
+
+</html>
