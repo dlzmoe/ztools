@@ -33,6 +33,7 @@
 - [时间戳转换工具](https://ztools.zishu.me/timestamp/)
 - [获取 ip 地址](https://ztools.zishu.me/ip/)
 - [推特视频下载器](https://ztools.zishu.me/twitter-video-download/)
+- [ipfs 图床](https://ztools.zishu.me/ipfs-image/)
 
 ## 安装
 
