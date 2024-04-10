@@ -1,23 +1,23 @@
 ## ztools
 
 <div align="center">
-  <a href="https://github.com/98zi/ztools/">
+  <a href="https://github.com/anghunk/ztools/">
     <img src="https://imgurl.zishu.me/2023/1702999949390.webp" alt="Logo" width="200">
   </a>
   <p align="center">
    这是一个简单的工具库，纯前端实现，无后台，代码已开源。
     <p>
-        <img src="https://img.shields.io/github/license/98zi/ztools" alt="GitHub license">
-        <img src="https://img.shields.io/github/stars/98zi/ztools" alt="GitHub Repo stars">
-        <img src="https://img.shields.io/github/issues/98zi/ztools" alt="GitHub issues">
-        <img src="https://img.shields.io/github/forks/98zi/ztools" alt="GitHub forks">
-        <img src="https://img.shields.io/github/commit-activity/t/98zi/ztools" alt="GitHub commit">
-        <img src="https://img.shields.io/github/followers/98zi" alt="GitHub followers">
+        <img src="https://img.shields.io/github/license/anghunk/ztools" alt="GitHub license">
+        <img src="https://img.shields.io/github/stars/anghunk/ztools" alt="GitHub Repo stars">
+        <img src="https://img.shields.io/github/issues/anghunk/ztools" alt="GitHub issues">
+        <img src="https://img.shields.io/github/forks/anghunk/ztools" alt="GitHub forks">
+        <img src="https://img.shields.io/github/commit-activity/t/anghunk/ztools" alt="GitHub commit">
+        <img src="https://img.shields.io/github/followers/anghunk" alt="GitHub followers">
         <img src="https://img.shields.io/discord/1126519222172925952" alt="Discord">
       </p>
   <a href="https://ztools.zishu.me">在线演示</a>
   ·
-  <a href="https://github.com/98zi/ztools/issues">提出新特性</a>
+  <a href="https://github.com/anghunk/ztools/issues">提出新特性</a>
   </p>
 
 </div>
