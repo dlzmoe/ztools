@@ -35,6 +35,7 @@
   },
   "dependencies": {
     "@babel/preset-env": "^7.16.8",
+    "caniuse-lite": "^1.0.30001643",
     "canvas-txt": "^3.0.0",
     "jquery": "^3.6.0"
   }

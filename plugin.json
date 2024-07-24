@@ -1,0 +1,14 @@
+{
+	"main": "dist/index.html",
+	"logo": "dist/images/logo.png",
+	"features": [
+		{
+			"code": "ztools",
+			"explain": "这是一个简单的工具库，纯前端实现，无后台。",
+			"cmds": [
+				"ztools",
+				"工具箱"
+			]
+		}
+	]
+}
